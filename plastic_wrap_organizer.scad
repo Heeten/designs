@@ -45,11 +45,11 @@ module plane_with_grooves() {
 
 module unit() {
     rotate([0, 90, 0])
-    translate([-75, 0, 2])
+    translate([-74, 0, 2])
     plane(5, 10, 72);
 
     rotate([0, 90, 0])
-    translate([-75, 0, 73])
+    translate([-74, 0, 73])
     plane(5, 10, 72);
 
     plane_with_grooves();
