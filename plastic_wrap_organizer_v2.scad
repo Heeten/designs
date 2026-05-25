@@ -60,7 +60,7 @@ module side_wall() {
     color("green")
     rotate([-90, 180, 0])
     translate([-triangle_base, unit_height, 0])
-    linear_extrude(252)
+    linear_extrude(unit_length)
                 polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 }
 
