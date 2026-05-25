@@ -6,7 +6,7 @@ module plane(plane_top_width, plane_bottom_width, plane_width) {
     for(i = [30:25:224]) {
         translate([0, i, 0])
         color("red")
-        cube([plane_width, 5, thickness]);
+        cube([plane_width, 3.2, thickness]);
     }
     color("pink")
     translate([0, 0, 0])
