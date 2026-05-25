@@ -8,7 +8,7 @@ outside_beam_width = 10;
 inside_beam_width = outside_beam_width / 2.0;
 
 triangle_base = 2;
-triangle_height = 1.5;
+triangle_height = 0.75 * thickness;
 
 module shared_inner_bottom_layer(num_units) {
     difference() {
@@ -48,9 +48,9 @@ module side_wall() {
     translate([0, unit_length - outside_beam_width, 0])
     cube([thickness, outside_beam_width, unit_height]);
     
-    start = outside_beam_width + 40;
+    start = outside_beam_width + 35;
     stop = unit_length - 30;
-    for(i = [start:40:stop]) {
+    for(i = [start:45:stop]) {
         translate([0, i, 0])
         cube([thickness, 5, unit_height]);
     }
@@ -105,7 +105,7 @@ translate([inside_beam_width, 0, 0])
 cube([outside_beam_width - inside_beam_width, unit_length, thickness]);
 
 translate([-2, 0, 0])
-cube([2, unit_length, 2]);
+cube([2, unit_length, thickness]);
 
 translate([unit_width * 3, 0, 0])
 cube([2, unit_length, thickness]);
