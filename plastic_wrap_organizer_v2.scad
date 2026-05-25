@@ -16,7 +16,7 @@ module inner_bottom_layer() {
             for(i = [-50:50:(unit_length-20)]) {
                 translate([-20, i, 0])
                 rotate([0, 0, -45])
-                cube([20, 555, thickness]);
+                cube([27, 555, thickness]);
             }
         }
     }
