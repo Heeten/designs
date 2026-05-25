@@ -5,6 +5,7 @@ unit_height = 75;
 thickness = 2;
 
 outside_beam_width = 10;
+inside_beam_width = outside_beam_width / 2.0;
 
 triangle_base = 2;
 triangle_height = 1.5;
@@ -23,16 +24,16 @@ module shared_inner_bottom_layer(num_units) {
 }
 
 module outer_bottom_layer() {    
-    cube([outside_beam_width, unit_length, thickness]);
+    cube([inside_beam_width, unit_length, thickness]);
     
     color("green")
     cube([unit_width, outside_beam_width, thickness]);
     
-    translate([unit_width - outside_beam_width, 0, 0])
-    cube([outside_beam_width, unit_length, thickness]);
+    translate([unit_width - inside_beam_width, 0, 0])
+    cube([inside_beam_width, unit_length, thickness]);
     
     color("green")
-    translate([0, unit_length - outside_beam_width, 0])
+    translate([0, unit_length - inside_beam_width, 0])
     cube([unit_width, outside_beam_width, thickness]);    
 }
 
@@ -100,8 +101,14 @@ difference() {
     }
 }
 
+translate([inside_beam_width, 0, 0])
+cube([outside_beam_width - inside_beam_width, unit_length, thickness]);
+
 translate([-2, 0, 0])
 cube([2, unit_length, 2]);
 
 translate([unit_width * 3, 0, 0])
-cube([2, unit_length, 2]);
+cube([2, unit_length, thickness]);
+
+translate([3*unit_width - outside_beam_width, 0, 0])
+cube([outside_beam_width - inside_beam_width, unit_length, thickness]);
