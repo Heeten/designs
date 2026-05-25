@@ -2,12 +2,12 @@
 unit_length = 240;
 unit_width = 75;
 unit_height = 75;
-thickness = 2;
+thickness = 1.6;
 
 outside_beam_width = 10;
 inside_beam_width = outside_beam_width / 2.0;
 
-triangle_base = 2;
+triangle_base = thickness;
 triangle_height = 0.75 * thickness;
 
 module shared_inner_bottom_layer(num_units) {
