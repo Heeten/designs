@@ -56,13 +56,13 @@ module unit() {
     
     color("orange")
             rotate([-90, 180, 0])
-            translate([-4, 75, 0])
+            translate([-4, 74, 0])
             linear_extrude(252)
                 polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 
     color("orange")
             rotate([-90, 180, 0])
-            translate([-75, 75, 0])
+            translate([-75, 74, 0])
             linear_extrude(252)
                 polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 }
