@@ -9,11 +9,11 @@ outside_beam_width = 10;
 triangle_base = 2;
 triangle_height = 1.5;
 
-module inner_bottom_layer() {
+module shared_inner_bottom_layer(num_units) {
     difference() {
-        cube([unit_width, unit_length, thickness]);
+        cube([num_units * unit_width, unit_length, thickness]);
         union() {
-            for(i = [-50:50:(unit_length-20)]) {
+            for(i = [-500:50:500]) {
                 translate([-20, i, 0])
                 rotate([0, 0, -45])
                 cube([27, 555, thickness]);
@@ -22,9 +22,7 @@ module inner_bottom_layer() {
     }
 }
 
-module bottom_layer() {
-    inner_bottom_layer();
-    
+module outer_bottom_layer() {    
     cube([outside_beam_width, unit_length, thickness]);
     
     color("green")
@@ -64,17 +62,18 @@ module side_wall() {
                 polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 }
 
-bottom_layer();
+shared_inner_bottom_layer(3);
+outer_bottom_layer();
 side_wall();
 
 translate([unit_width, 0, 0])
-bottom_layer();
+outer_bottom_layer();
 
 translate([unit_width - thickness/2, 0, 0])
 side_wall();
 
 translate([2*unit_width, 0, 0])
-bottom_layer();
+outer_bottom_layer();
 
 translate([2 * unit_width - thickness/2, 0, 0])
 side_wall();
