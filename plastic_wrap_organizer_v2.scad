@@ -4,7 +4,7 @@ unit_width = 75;
 unit_height = 75;
 thickness = 2;
 
-outside_beam_width = 15;
+outside_beam_width = 10;
 
 triangle_base = 2;
 triangle_height = 1.5;
