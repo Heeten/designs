@@ -1,3 +1,4 @@
+// Had issues printing this, trying a slightly different design
 triangle_base = 2;
 triangle_height = 1.5;
 thickness = 2;
