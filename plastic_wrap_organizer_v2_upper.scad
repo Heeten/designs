@@ -48,8 +48,8 @@ module side_wall() {
     translate([0, unit_length - outside_beam_width, 0])
     cube([thickness, outside_beam_width, unit_height]);
     
-    start = outside_beam_width + 10;
-    stop = unit_length - outside_beam_width - 5;
+    start = outside_beam_width + 40;
+    stop = unit_length - 30;
     for(i = [start:40:stop]) {
         translate([0, i, 0])
         cube([thickness, 5, unit_height]);
