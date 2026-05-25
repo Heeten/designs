@@ -1,6 +1,6 @@
-base = 2;
+triangle_base = 2;
 triangle_height = 1.5;
-thickness = 3;
+thickness = 2;
 
 module plane(plane_top_width, plane_bottom_width, plane_width) {
     for(i = [30:25:224]) {
@@ -32,24 +32,24 @@ module plane_with_grooves() {
             rotate([-90, 180, 0])
             translate([-4, 0, 0])
             linear_extrude(252)
-                polygon(points = [[0, 0], [base, 0], [base/2, triangle_height]]);
+                polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 
             color("green")
             rotate([-90, 180, 0])
             translate([-75, 0, 0])
             linear_extrude(252)
-                polygon(points = [[0, 0], [base, 0], [base/2, triangle_height]]);
+                polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
         }
     }
 }
 
 module unit() {
     rotate([0, 90, 0])
-    translate([-75, 0, 1.5])
+    translate([-75, 0, 2])
     plane(5, 10, 72);
 
     rotate([0, 90, 0])
-    translate([-75, 0, 72.5])
+    translate([-75, 0, 73])
     plane(5, 10, 72);
 
     plane_with_grooves();
@@ -58,13 +58,13 @@ module unit() {
             rotate([-90, 180, 0])
             translate([-4, 75, 0])
             linear_extrude(252)
-                polygon(points = [[0, 0], [base, 0], [base/2, triangle_height]]);
+                polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 
     color("orange")
             rotate([-90, 180, 0])
             translate([-75, 75, 0])
             linear_extrude(252)
-                polygon(points = [[0, 0], [base, 0], [base/2, triangle_height]]);
+                polygon(points = [[0, 0], [triangle_base, 0], [triangle_base/2, triangle_height]]);
 }
 
 unit();
