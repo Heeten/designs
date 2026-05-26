@@ -1,5 +1,5 @@
 
-unit_height = 10;
+unit_height = 5;
 unit_width = 160;
 thickness = 1.8;
 groove_depth = 3;
