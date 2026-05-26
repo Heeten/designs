@@ -2,7 +2,8 @@
 unit_length = 240;
 unit_width = 75;
 unit_height = 75;
-thickness = 0.45 * 4;
+//thickness = 0.45 * 4;
+thickness = 2.0;
 
 outside_beam_width = 10;
 inside_beam_width = outside_beam_width / 2.0;
