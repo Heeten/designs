@@ -1,6 +1,6 @@
 
-unit_height = 2;
-unit_width = 160;
+unit_height = 75;
+unit_width = 188;
 
 groove_spacing = 65.16;
 
