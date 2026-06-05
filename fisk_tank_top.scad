@@ -1,20 +1,37 @@
-thickness = 4*0.45;
+thickness = 3*0.45;
+height = 6;
 
-intersection() {
-    cube([220, 220, thickness]);
 
-    union() {
-        for(i = [-500:15:500]) {
-            translate([0, i, 0])
-            rotate([0, 0, -45])
-            cube([thickness, 1000, thickness]);
-            
-            translate([0, i, 0])
-            rotate([0, 0, -135])
-            cube([thickness, 1000, thickness]);
-        }
+for(i = [-500:15:500]) {
+    intersection() {
+        cube([220, 220, thickness]);
+
+        translate([0, i, 0])
+        rotate([0, 0, -45])
+        cube([thickness, 1000, thickness]);
+    }    
+    
+    intersection() {
+        cube([220, 220, thickness]);
+
+        translate([0, i, 0])
+        rotate([0, 0, -135])
+        cube([thickness, 1000, thickness]);
     }
 }
+
+color("blue")
+translate([-thickness, 0, -height])
+cube([thickness, 220, height + thickness]);
+
+
+color("blue")
+translate([-thickness, -thickness, -height])
+cube([220 + thickness, thickness, height + thickness]);
+
+color("blue")
+translate([-thickness, 220, -height])
+cube([220 + thickness, thickness, height + thickness]);
 
 cube([10, 220, thickness]);
 cube([220, 10, thickness]);
