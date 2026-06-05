@@ -5,6 +5,8 @@ length = 420-220-5;
 depth = 220;
 beam_width = 5;
 
+inner_beam_width = 6*0.45;
+
 module mesh() {
     for(i = [-500:15:500]) {
         intersection() {
@@ -25,16 +27,25 @@ module mesh() {
     }
 }
 
-module without_holes() {
+difference() {
     mesh();
-    cube([beam_width, depth, thickness]);
-    cube([length, beam_width, thickness]);
-
-    translate([length - beam_width, 0, 0])
-    cube([beam_width, depth, thickness]);
-
-    translate([0, depth - beam_width, 0])
-    cube([length, beam_width, thickness]);
+        union() {
+        translate([50, depth - 50, 0])
+        cube([200, 50, thickness]);
+    }
 }
 
-without_holes();
+cube([beam_width, depth, thickness]);
+cube([length, beam_width, thickness]);
+
+translate([length - beam_width, 0, 0])
+cube([beam_width, depth-50, thickness]);
+
+translate([0, depth - beam_width, 0])
+cube([50, beam_width, thickness]);
+
+translate([50 - inner_beam_width, depth - 50, 0])
+cube([inner_beam_width, 50, thickness]);
+
+translate([50 - inner_beam_width, depth - 50 - inner_beam_width, 0])
+cube([length - 50, inner_beam_width, thickness]);
