@@ -36,10 +36,23 @@ difference() {
 }
 
 cube([beam_width, depth, thickness]);
+
+color("blue")
+translate([-thickness, 0, -height])
+cube([thickness, depth, height + thickness]);
+
+color("blue")
+translate([-thickness, -thickness, -height])
+cube([length + 2*thickness, thickness, height + thickness]);
+
 cube([length, beam_width, thickness]);
 
 translate([length - beam_width, 0, 0])
 cube([beam_width, depth-50, thickness]);
+
+color("blue")
+translate([length, 0, -height])
+cube([thickness, depth-50, thickness + height]);
 
 translate([0, depth - beam_width, 0])
 cube([50, beam_width, thickness]);
