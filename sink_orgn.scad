@@ -2,7 +2,7 @@
 // Dimensions: 160x280x5mm
 
 width = 160;
-height = 280;
+height = 200;
 thickness = 5;
 hole_width = 5;
 hole_height = 15;
@@ -96,34 +96,6 @@ difference() {
             translate([0, 5.00, 0])
                 cylinder(r=2.50, h=6, $fn=16);
         }
-    translate([40.00, 200.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([20.00, 220.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([40.00, 240.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([20.00, 260.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
     translate([60.00, 20.00, -0.5])
         hull() {
             translate([0, -5.00, 0])
@@ -187,34 +159,7 @@ difference() {
             translate([0, 5.00, 0])
                 cylinder(r=2.50, h=6, $fn=16);
         }
-    translate([80.00, 200.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([60.00, 220.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([80.00, 240.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([60.00, 260.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
+    
     translate([100.00, 20.00, -0.5])
         hull() {
             translate([0, -5.00, 0])
@@ -278,34 +223,7 @@ difference() {
             translate([0, 5.00, 0])
                 cylinder(r=2.50, h=6, $fn=16);
         }
-    translate([120.00, 200.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([100.00, 220.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([120.00, 240.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([100.00, 260.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
+
     translate([140.00, 20.00, -0.5])
         hull() {
             translate([0, -5.00, 0])
@@ -341,18 +259,5 @@ difference() {
             translate([0, 5.00, 0])
                 cylinder(r=2.50, h=6, $fn=16);
         }
-    translate([140.00, 220.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
-    translate([140.00, 260.00, -0.5])
-        hull() {
-            translate([0, -5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-            translate([0, 5.00, 0])
-                cylinder(r=2.50, h=6, $fn=16);
-        }
+
 }
