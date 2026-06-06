@@ -97,8 +97,13 @@ module mesh(width, depth) {
     }
 }
 
-translate([0, -4, 0])
-create_hooks(100, 50, 2);
+difference() {
+    translate([0, -4, 0])
+    create_hooks(100, 37, 2);
+    
+    translate([0, -50, -10])
+    cube([100, 100, 10]);
+}
 
 rotate([90, 0, 0])
 mesh(100, 50);
