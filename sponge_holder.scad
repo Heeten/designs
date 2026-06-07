@@ -2,7 +2,7 @@ thickness = 5;
 hole_width = 5;
 hole_height = 15;
 
-module peg() {
+module peg2() {
     translate([0, 0, -4.5])
     cube([4.5, thickness, 4.5]);
     
@@ -47,9 +47,25 @@ module mesh(width, depth, beam_width) {
     }
 }
 
+for(x = [40:40:160-40]) {
+    color("blue")
+    translate([x, 50, 6.0])
+    cube([4.5, 5.1, 6.0]);
+
+    color("green")
+    translate([x, 50 + 5.1, 0])
+    cube([4.5, 4.5, 12]);
+}
+
+*translate([40, 0, 0])
 peg();
 
-translate([40, 0, 0])
-peg();
+mesh(160, 50, 6);
 
+rotate([90, 0, 0])
+translate([0, 0, -thickness])
+mesh(160, 50, 6);
+
+rotate([90, 0, 0])
+translate([0, 0, -50])
 mesh(160, 50, 6);
