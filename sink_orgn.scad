@@ -7,8 +7,6 @@ thickness = 5;
 hole_width = 5;
 hole_height = 15;
 board_radius = 8;
-screw_hole_diameter = 5;
-screw_hole_inset = 10;
 
 translate([10, 0, 0])
 cube([40, thickness, 55]);
