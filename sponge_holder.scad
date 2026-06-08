@@ -48,6 +48,9 @@ module mesh(width, depth, beam_width) {
 }
 
 for(x = [40:40:160-40]) {
+    translate([x, 50-thickness, 0])
+    cube([4.5, thickness, 15]);
+    
     color("blue")
     translate([x, 50, 6.0])
     cube([4.5, 5.1, 6.0]);
