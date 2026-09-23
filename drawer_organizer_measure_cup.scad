@@ -34,18 +34,18 @@ cube([groove_depth + thickness, 4.2, unit_height]);
 translate([unit_width-thickness, 27+4.39+groove_spacing+.1, 0])
 cube([groove_depth + thickness, 4.2, unit_height]);
 
-color("blue")
+color("cyan")
 translate([-bar_width, 0, unit_height-thickness])
 cube([bar_width+thickness, unit_depth, thickness]);
 
-color("green")
+color("lime")
 translate([-bar_width-thickness, 0, unit_height-bar_grip_height-thickness])
 cube([thickness, unit_depth, bar_grip_height+thickness]);
 
 color("blue")
-translate([unit_width-thickness, 0, unit_height-thickness])
+translate([unit_width, 0, unit_height-thickness])
 cube([bar_width+thickness, unit_depth, thickness]);
 
 color("green")
-translate([unit_width+bar_width-thickness, 0, unit_height-bar_grip_height-thickness])
+translate([unit_width+bar_width+.2, 0, unit_height-bar_grip_height-thickness])
 cube([thickness, unit_depth, bar_grip_height+thickness]);
