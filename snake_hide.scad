@@ -1,6 +1,6 @@
 // Oval snake hide, printed as two halves on a Bambu A1 (256 x 256 bed).
 // No supports: every wall is <= 45 degrees, the roof is a short bridge,
-// and the entrance is an arch with a flat-bridged top.
+// and the entrance arch has a pointed top.
 //
 // Set `part` to "A" or "B" and export each half to STL.
 // Pin the halves together with two short pieces of 1.75 mm filament.
@@ -12,8 +12,7 @@ width = 240;           // outer width of the oval (y)
 roof_width = 30;       // flat roof strip across the top (bridged)
 wall = 4;              // horizontal wall thickness (~2.8 mm normal to the 45 deg slope)
 
-entrance_width = 70;
-entrance_height = 70;
+entrance_width = 70;  // opening is ~1.2x this tall (round top with a 45 deg peak)
 
 lap = 8;               // how far the two halves overlap at the seam
 clearance = 0.25;      // gap between mating lap surfaces
@@ -76,19 +75,15 @@ module teardrop(r) {
 }
 
 // Arched doorway: straight sides up to the widest point, a round top, and
-// the very top trimmed flat where it would overhang more than 45 degrees
-// (a short bridge instead of supports).
+// a 45 degree peak so it prints without supports or a bridge.
 module entrance() {
     r = entrance_width / 2;
     translate([a / 2, 0, 0])
     rotate([90, 0, 90])
     linear_extrude(a / 2 + 1)
-    intersection() {
-        union() {
-            translate([0, r - 1]) teardrop(r);
-            translate([-r, -1]) square([entrance_width, r]);
-        }
-        translate([-r, -1]) square([entrance_width, entrance_height + 1]);
+    union() {
+        translate([0, r - 1]) teardrop(r);
+        translate([-r, -1]) square([entrance_width, r]);
     }
 }
 
