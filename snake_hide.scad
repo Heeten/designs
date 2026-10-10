@@ -1,6 +1,6 @@
 // Oval snake hide, printed as two halves on a Bambu A1 (256 x 256 bed).
 // No supports: every wall is <= 45 degrees, the roof is a short bridge,
-// and the entrance is a teardrop arch.
+// and the entrance is a circle with a flat-bridged top.
 //
 // Set `part` to "A" or "B" and export each half to STL.
 // Pin the halves together with two short pieces of 1.75 mm filament.
@@ -13,7 +13,7 @@ roof_width = 30;       // flat roof strip across the top (bridged)
 wall = 4;              // horizontal wall thickness (~2.8 mm normal to the 45 deg slope)
 
 entrance_width = 70;
-entrance_height = 60;
+entrance_height = 70;
 
 lap = 8;               // how far the two halves overlap at the seam
 clearance = 0.25;      // gap between mating lap surfaces
@@ -75,15 +75,16 @@ module teardrop(r) {
     }
 }
 
+// Circle resting on the floor, with its top trimmed flat where it would
+// overhang more than 45 degrees (a short bridge instead of supports).
 module entrance() {
     r = entrance_width / 2;
-    straight = max(0, entrance_height - r - r * sqrt(2));
     translate([a / 2, 0, 0])
     rotate([90, 0, 90])
     linear_extrude(a / 2 + 1)
-    union() {
-        translate([-r, -1]) square([entrance_width, straight + 1]);
-        translate([0, straight]) teardrop(r);
+    intersection() {
+        translate([0, r - 1]) teardrop(r);  // dip below the floor so the edge isn't knife-thin
+        translate([-r, -1]) square([entrance_width, entrance_height + 1]);
     }
 }
 
