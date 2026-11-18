@@ -1,17 +1,19 @@
-// Test slice for a two-piece fish tank lid (Bambu A1, 256 x 256 bed).
+// Fit test for a two-piece fish tank lid (Bambu A1, 256 x 256 bed).
 //
 // The full lid drops INSIDE the tank's plastic rim and rests on the ledge
 // there, instead of sitting on top of the rim. That keeps it under 256 mm
 // wide, so the whole lid is just two halves that overlap in the middle.
 // Half B lifts straight out (for feeding); half A stays put.
 //
-// This file prints only the middle strip of that lid: 40 mm of each half on
-// either side of the seam, at the full width. Drop the two strips into the
-// middle of the tank to check:
-//   - the width fits between the rim walls without binding or rattling,
-//   - both ends sit on the ledge with enough overlap that they can't fall in,
-//   - the overlap seam lines up flush and B lifts off easily,
-//   - the mesh is stiff enough across the full span.
+// By default this prints a small coupon of each half: the corner where the
+// seam meets one side wall (50 mm of width, 40 mm each side of the seam).
+// The left end (x = 0) is the real lid edge. Snap A and B together, then
+// hold that edge down on the ledge against the side wall to check:
+//   - it sits on the ledge without rocking, and the ledge is wide enough,
+//   - how the top sits relative to the top of the rim,
+//   - the overlap seam lines up flush and B lifts off easily.
+// Set test_w = lid_w to print a full-width strip instead, which also checks
+// the overall width and how much it sags.
 //
 // Set `part` to "A" or "B" and export each to STL. Both print flat with no
 // supports. B is laid out upside down so its overlap lip is on the bed.
@@ -33,6 +35,9 @@ frame_w  = 8;       // solid border around each piece
 rib      = 3*0.45;  // mesh rib width (3 lines, same as the old lid)
 pitch    = 15;      // mesh spacing (same diamond pattern as the old lid)
 lap      = 12;      // how far the two halves overlap at the seam
+
+// ---- How much to print ----
+test_w    = 50;     // width of the coupon from the side wall; lid_w for a full-width strip
 slice_len = 40;     // how much of each half to print, measured from the seam
 
 bed = 256;
@@ -45,6 +50,7 @@ echo(str("Ledge overlap: ", ledge_w - edge_gap, " mm centred, ",
          worst_overlap, " mm on the far side if shoved to one wall"));
 assert(lid_w <= bed - 4, "Lid is too wide for the A1 bed: two pieces won't work");
 assert(worst_overlap >= 3, "Too little ledge overlap: shrink edge_gap");
+assert(test_w <= lid_w, "test_w can't be wider than the lid");
 
 // Diamond holes on a 45 degree grid; perpendicular rib spacing is pitch/sqrt(2).
 module diamonds(w, l) {
@@ -70,37 +76,37 @@ module panel(w, l) {
 // Seam is the line y = 0, running across the tank's width.
 // A sits at y < 0 and has a lower tongue reaching across the seam.
 // B sits at y > 0 and has an upper lip that rests on A's tongue.
-module half_A(len) {
-    translate([0, -len, 0]) panel(lid_w, len - lap/2);
+module half_A(w, len) {
+    translate([0, -len, 0]) panel(w, len - lap/2);
     translate([0, -lap/2 - frame_w, 0])
-        cube([lid_w, frame_w + lap - seam_gap, t/2]);
+        cube([w, frame_w + lap - seam_gap, t/2]);
 }
 
-module half_B(len) {
-    translate([0, lap/2, 0]) panel(lid_w, len - lap/2);
+module half_B(w, len) {
+    translate([0, lap/2, 0]) panel(w, len - lap/2);
     translate([0, -lap/2 + seam_gap, t/2])
-        cube([lid_w, lap - seam_gap + frame_w, t/2]);
+        cube([w, lap - seam_gap + frame_w, t/2]);
 }
 
-// Just enough of the rim to see how the strip sits: walls plus ledges.
-// The lid's underside (z = 0) rests on the ledge tops.
+// Just enough of the rim to see how the piece sits: wall plus ledge.
+// The lid's underside (z = 0) rests on the ledge top.
 module ghost_rim(len) {
     y0 = -len - 10;
     yl = 2*len + 20;
-    for (x = [-edge_gap - 5, lid_w + edge_gap])            // walls up to the rim top
-        translate([x, y0, -3]) cube([5, yl, ledge_drop + 3]);
-    for (x = [-edge_gap, lid_w + edge_gap - ledge_w])      // ledges
-        translate([x, y0, -3]) cube([ledge_w, yl, 3]);
+    walls   = test_w < lid_w ? [-edge_gap - 5] : [-edge_gap - 5, lid_w + edge_gap];
+    ledges  = test_w < lid_w ? [-edge_gap]     : [-edge_gap, lid_w + edge_gap - ledge_w];
+    for (x = walls)  translate([x, y0, -3]) cube([5, yl, ledge_drop + 3]);  // wall up to the rim top
+    for (x = ledges) translate([x, y0, -3]) cube([ledge_w, yl, 3]);         // ledge
 }
 
 if (part == "A") {
     // Print top-up; tongue is already on the bed.
-    translate([0, slice_len, 0]) half_A(slice_len);
+    translate([0, slice_len, 0]) half_A(test_w, slice_len);
 } else if (part == "B") {
     // Flip so the lip is on the bed; the lid's top face prints against the plate.
-    translate([0, 0, t]) mirror([0, 0, 1]) translate([0, lap/2 - seam_gap, 0]) half_B(slice_len);
+    translate([0, 0, t]) mirror([0, 0, 1]) translate([0, lap/2 - seam_gap, 0]) half_B(test_w, slice_len);
 } else {
-    color("SteelBlue") half_A(slice_len);
-    color("Orange") half_B(slice_len);
+    color("SteelBlue") half_A(test_w, slice_len);
+    color("Orange") half_B(test_w, slice_len);
     %ghost_rim(slice_len);
 }
