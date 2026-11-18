@@ -5,20 +5,20 @@
 // wide, so the whole lid is just two halves that overlap in the middle.
 // Half B lifts straight out (for feeding); half A stays put.
 //
-// By default this prints a small coupon of each half: the corner where the
-// seam meets one side wall (50 mm of width, 40 mm each side of the seam).
-// The left end (x = 0) is the real lid edge. Snap A and B together, then
-// hold that edge down on the ledge against the side wall to check:
-//   - it sits on the ledge without rocking, and the ledge is wide enough,
-//   - how the top sits relative to the top of the rim,
-//   - the overlap seam lines up flush and B lifts off easily.
-// Set test_w = lid_w to print a full-width strip instead, which also checks
-// the overall width and how much it sags.
+// part = "fit" (default) prints one plain strip that spans the full distance
+// front to back inside the rim, at the real lid thickness, but only
+// fit_len wide. Drop it into the tank to check:
+//   - it fits between the front and back walls without binding or rattling,
+//   - both ends sit flat on the ledge with enough overlap,
+//   - how its top sits relative to the top of the rim.
 //
-// Set `part` to "A" or "B" and export each to STL. Both print flat with no
-// supports. B is laid out upside down so its overlap lip is on the bed.
+// part = "A" / "B" print small coupons of the two halves at the seam
+// (test_w wide) to check the overlap joint. Set test_w = lid_w for full-width
+// strips. B is laid out upside down so its overlap lip is on the bed.
+//
+// Everything prints flat with no supports.
 
-part = "both"; // "A", "B", or "both" (assembled preview with a ghost rim)
+part = "fit"; // "fit", "A", "B", or "both" (A + B assembled); previews show a ghost rim
 
 // ---- Measure your tank (these are guesses for a standard 10-gallon) ----
 rim_inner_w = 250;  // across the short way, between the rim's inside walls, just above the ledge
@@ -37,6 +37,7 @@ pitch    = 15;      // mesh spacing (same diamond pattern as the old lid)
 lap      = 12;      // how far the two halves overlap at the seam
 
 // ---- How much to print ----
+fit_len   = 30;     // how wide the fit strip is (along the tank's length)
 test_w    = 50;     // width of the coupon from the side wall; lid_w for a full-width strip
 slice_len = 40;     // how much of each half to print, measured from the seam
 
@@ -88,18 +89,19 @@ module half_B(w, len) {
         cube([w, lap - seam_gap + frame_w, t/2]);
 }
 
-// Just enough of the rim to see how the piece sits: wall plus ledge.
-// The lid's underside (z = 0) rests on the ledge top.
-module ghost_rim(len) {
-    y0 = -len - 10;
-    yl = 2*len + 20;
-    walls   = test_w < lid_w ? [-edge_gap - 5] : [-edge_gap - 5, lid_w + edge_gap];
-    ledges  = test_w < lid_w ? [-edge_gap]     : [-edge_gap, lid_w + edge_gap - ledge_w];
+// Just enough of the rim to see how a piece sits: walls plus ledges.
+// The lid's underside (z = 0) rests on the ledge tops.
+module ghost_rim(y0, yl, both_sides) {
+    walls  = both_sides ? [-edge_gap - 5, lid_w + edge_gap] : [-edge_gap - 5];
+    ledges = both_sides ? [-edge_gap, lid_w + edge_gap - ledge_w] : [-edge_gap];
     for (x = walls)  translate([x, y0, -3]) cube([5, yl, ledge_drop + 3]);  // wall up to the rim top
     for (x = ledges) translate([x, y0, -3]) cube([ledge_w, yl, 3]);         // ledge
 }
 
-if (part == "A") {
+if (part == "fit") {
+    panel(lid_w, fit_len);
+    %ghost_rim(-10, fit_len + 20, true);
+} else if (part == "A") {
     // Print top-up; tongue is already on the bed.
     translate([0, slice_len, 0]) half_A(test_w, slice_len);
 } else if (part == "B") {
@@ -108,5 +110,5 @@ if (part == "A") {
 } else {
     color("SteelBlue") half_A(test_w, slice_len);
     color("Orange") half_B(test_w, slice_len);
-    %ghost_rim(slice_len);
+    %ghost_rim(-slice_len - 10, 2*slice_len + 20, test_w >= lid_w);
 }
