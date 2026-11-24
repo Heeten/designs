@@ -9,7 +9,7 @@
 // supports. B is laid out upside down so its overlap lip is on the bed.
 //
 // Coordinates: x runs along the tank's length, y front to back, z up.
-// The back edge is y = lid_w.
+// The back edge is y = lid_w. With a_on_right, x = 0 is the right end.
 
 part = "both"; // "A", "B", or "both" (assembled preview with a ghost rim)
 
@@ -42,7 +42,9 @@ finger_x = 35;      // distance of that hole's centre from the end of the lid
 // [centre measured from the left end, width, depth].
 // One notch for two cords side by side, on half A (the half that stays put)
 // so lifting B out for feeding doesn't disturb them.
+// Notch positions are measured from half A's outer end.
 notches = [[60, 30, 15]];
+a_on_right = true;  // true: half A (and the cord notch) at the right end, seen from the front
 
 bed = 256;
 
@@ -121,15 +123,23 @@ module ghost_rim() {
     translate([0, 0, -3]) linear_extrude(3) difference() { inner(); offset(delta = -ledge_w) inner(); }
 }
 
+// Mirror end to end (within width w) when half A goes on the right.
+module place(w) {
+    if (a_on_right) translate([w, 0, 0]) mirror([1, 0, 0]) children();
+    else children();
+}
+
 if (part == "A") {
     // Print top-up; the tongue is already on the bed.
-    half_A();
+    place(a_len) half_A();
 } else if (part == "B") {
     // Flip so the lip is on the bed; the lid's top face prints against the plate.
-    translate([0, 0, t]) mirror([0, 0, 1])
+    place(b_len) translate([0, 0, t]) mirror([0, 0, 1])
         translate([-(seam_x - lap/2 + seam_gap), 0, 0]) half_B();
 } else {
-    color("SteelBlue") half_A();
-    color("Orange") half_B();
-    %ghost_rim();
+    place(lid_l) {
+        color("SteelBlue") half_A();
+        color("Orange") half_B();
+        %ghost_rim();
+    }
 }
