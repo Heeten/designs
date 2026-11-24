@@ -39,8 +39,10 @@ finger_d = 25;      // lifting hole near each half's outer end
 finger_x = 35;      // distance of that hole's centre from the end of the lid
 
 // Cutouts in the back edge for a filter, cords, etc. Each is
-// [centre measured from the left end, width, depth]. Empty for now.
-notches = [];
+// [centre measured from the left end, width, depth].
+// One notch for two cords side by side, on half A (the half that stays put)
+// so lifting B out for feeding doesn't disturb them.
+notches = [[60, 30, 15]];
 
 bed = 256;
 
